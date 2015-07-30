@@ -1,0 +1,487 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "ff6e1bdf62ed2790a2bbdb2f84be0610",
+    "packages": [
+        {
+            "name": "cebe/markdown",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cebe/markdown.git",
+                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/54a2c49de31cc44e864ebf0500a35ef21d0010b2",
+                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "cebe/indent": "*",
+                "facebook/xhprof": "*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "bin": [
+                "bin/markdown"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "cebe\\markdown\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "http://cebe.cc/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "A super fast, highly extensible markdown parser for PHP",
+            "homepage": "https://github.com/cebe/markdown#readme",
+            "keywords": [
+                "extensible",
+                "fast",
+                "gfm",
+                "markdown",
+                "markdown-extra"
+            ],
+            "time": "2015-03-06 05:28:07"
+        },
+        {
+            "name": "cogpowered/finediff",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cogpowered/FineDiff.git",
+                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cogpowered/FineDiff/zipball/339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
+                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "cogpowered\\FineDiff": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Crowe",
+                    "email": "rob@cogpowered.com"
+                },
+                {
+                    "name": "Raymond Hill"
+                }
+            ],
+            "description": "PHP implementation of a Fine granularity Diff engine",
+            "homepage": "https://github.com/cogpowered/FineDiff",
+            "keywords": [
+                "diff",
+                "finediff",
+                "opcode",
+                "string",
+                "text"
+            ],
+            "time": "2014-05-19 10:25:02"
+        },
+        {
+            "name": "erusev/parsedown",
+            "version": "1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "reference": "b9e5228e92e5f5c17d7774cfb2de8e5e8362de1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-04-29 20:22:24"
+        },
+        {
+            "name": "kzykhys/ciconia",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kzykhys/Ciconia.git",
+                "reference": "52d43ec35a656ef1bda07fdd8398081801f960ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kzykhys/Ciconia/zipball/52d43ec35a656ef1bda07fdd8398081801f960ae",
+                "reference": "52d43ec35a656ef1bda07fdd8398081801f960ae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.4.0",
+                "symfony/console": ">=2.3,<2.5-dev",
+                "symfony/options-resolver": ">=2.3,<2.5-dev"
+            },
+            "require-dev": {
+                "symfony/finder": ">=2.3,<2.5-dev",
+                "symfony/stopwatch": ">=2.3,<2.5-dev"
+            },
+            "bin": [
+                "bin/ciconia"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kazuyuki Hayashi",
+                    "email": "hayashi@valnur.net"
+                }
+            ],
+            "description": "The Markdown parser for PHP5.4",
+            "keywords": [
+                "cli",
+                "markdown",
+                "parser"
+            ],
+            "time": "2014-01-23 08:14:37"
+        },
+        {
+            "name": "league/commonmark",
+            "version": "0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "984455f72d4f07669c1f5c545768f60c4e871585"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/984455f72d4f07669c1f5c545768f60c4e871585",
+                "reference": "984455f72d4f07669c1f5c545768f60c4e871585",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.8"
+            },
+            "replace": {
+                "colinodell/commonmark-php": "*"
+            },
+            "require-dev": {
+                "erusev/parsedown": "~1.0",
+                "jgm/commonmark": "0.21",
+                "jgm/smartpunct": "0.21",
+                "michelf/php-markdown": "~1.4",
+                "phpunit/phpunit": "~4.3",
+                "phpunit/phpunit-mock-objects": "2.3.0",
+                "symfony/finder": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\CommonMark\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "http://www.colinodell.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Markdown parser for PHP based on the CommonMark spec",
+            "homepage": "https://github.com/thephpleague/commonmark",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-07-25 14:37:05"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/e1aabe18173231ebcefc90e615565742fc1c7fd9",
+                "reference": "e1aabe18173231ebcefc90e615565742fc1c7fd9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "John Gruber",
+                    "homepage": "http://daringfireball.net/"
+                },
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "https://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2015-03-01 12:03:08"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.4.10",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "39dd1c85ffdfc3c5fb008019dd027af05f64ec36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/39dd1c85ffdfc3c5fb008019dd027af05f64ec36",
+                "reference": "39dd1c85ffdfc3c5fb008019dd027af05f64ec36",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "symfony/event-dispatcher": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-09-22 08:51:05"
+        },
+        {
+            "name": "symfony/options-resolver",
+            "version": "v2.4.10",
+            "target-dir": "Symfony/Component/OptionsResolver",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/OptionsResolver.git",
+                "reference": "45f5e4f9b49eef5d88d68fbd36dbf27023283e44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/OptionsResolver/zipball/45f5e4f9b49eef5d88d68fbd36dbf27023283e44",
+                "reference": "45f5e4f9b49eef5d88d68fbd36dbf27023283e44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony OptionsResolver Component",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "time": "2014-09-22 08:51:05"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "mindplay/testies",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mindplay-dk/testies.git",
+                "reference": "4315563a87700c091de541519f3e4a141b2836f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mindplay-dk/testies/zipball/4315563a87700c091de541519f3e4a141b2836f3",
+                "reference": "4315563a87700c091de541519f3e4a141b2836f3",
+                "shasum": ""
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "5.*",
+                "phpunit/php-code-coverage": "2.*@dev"
+            },
+            "suggest": {
+                "phpunit/php-code-coverage": "2.*@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "header.php"
+                ],
+                "psr-4": {
+                    "mindplay\\testies\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Rasmus Schultz",
+                    "email": "rasc@fynskemedier.dk"
+                }
+            ],
+            "description": "Yeah, testies: a lightweight library for quick, simple unit-testing",
+            "time": "2015-06-22 09:35:17"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "mindplay/testies": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

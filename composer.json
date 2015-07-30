@@ -1,0 +1,28 @@
+{
+    "name": "mindplay/php-markdown-test",
+    "description": "Compare the output of various PHP Markdown parsers",
+    "type": "project",
+    "license": "LGPL3.0+",
+    "authors": [
+        {
+            "name": "Rasmus Schultz",
+            "email": "rasmus@mindplay.dk"
+        }
+    ],
+    "require": {
+        "michelf/php-markdown": ">=1.5",
+        "league/commonmark": ">=0.10.0",
+        "erusev/parsedown": ">=1.5",
+        "kzykhys/ciconia": ">=1.0",
+        "cebe/markdown": ">=1.1",
+        "cogpowered/finediff": "~0.3"
+    },
+    "require-dev": {
+        "mindplay/testies": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "mindplay\\market\\": "src/"
+        }
+    }
+}

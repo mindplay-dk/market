@@ -37,6 +37,20 @@ class SuiteFactory
      */
     private static function createTests()
     {
-        return array();
+        $f = new TestFactory(dirname(__DIR__) . '/vendor');
+
+        // TODO create tests from CommonMark's spec file
+
+        return array_merge(
+            $f->createTests('cebe/markdown/tests/markdown-data'),
+            $f->createTests('cebe/markdown/tests/extra-data'),
+            $f->createTests('cebe/markdown/tests/github-data'),
+            $f->createTests('erusev/parsedown/test/data'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core', 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/gfm', 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', 'md', 'out')
+        );
     }
 }

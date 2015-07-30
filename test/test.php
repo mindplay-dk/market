@@ -62,4 +62,14 @@ test(
     }
 );
 
+test(
+    'can configure test-suite',
+    function () {
+        $suite = SuiteFactory::create();
+
+        ok(count($suite->targets) > 0, 'it has targets');
+        ok(count($suite->tests) > 0, 'it has tests');
+    }
+);
+
 exit(run());

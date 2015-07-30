@@ -5,14 +5,9 @@ namespace mindplay\market;
 class Test
 {
     /**
-     * @var string
+     * @var string test source reference
      */
-    public $path;
-
-    /**
-     * @var string
-     */
-    public $filename;
+    public $reference;
 
     /**
      * @var string Markdown input

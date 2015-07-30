@@ -5,6 +5,7 @@ use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\TargetFactory;
 use mindplay\market\Test;
+use mindplay\market\TestFactory;
 
 require dirname(__DIR__) . '/header.php';
 
@@ -44,6 +45,20 @@ test(
         $results = $suite->run();
 
         eq($results[0]->success, true, 'completed a simple test');
+    }
+);
+
+test(
+    'can find a load test data',
+    function () {
+        $factory = new TestFactory(__DIR__);
+
+        $tests = $factory->createTests('sample-data');
+
+        eq(count($tests), 1, 'it finds the sample test-case');
+        eq($tests[0]->reference, 'sample-data/headline.md|html', 'it references the source files');
+        eq($tests[0]->input, file_get_contents(__DIR__ . '/sample-data/headline.md'), 'test input loaded');
+        eq($tests[0]->expected, file_get_contents(__DIR__ . '/sample-data/headline.html'), 'expected output loaded');
     }
 );
 

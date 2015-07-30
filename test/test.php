@@ -37,7 +37,7 @@ test(
 
         $test = new Test();
         $test->input = "# HELLO\n## WORLD\n";
-        $test->expected = "<h1>HELLO</h1>\n<h2>WORLD</h2>";
+        $test->expected = "<h1>HELLO</h1><h2>WORLD</h2>";
 
         $suite = new Suite(array($target), array($test));
 

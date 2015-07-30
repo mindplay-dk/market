@@ -5,7 +5,6 @@ use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\TargetFactory;
 use mindplay\market\Test;
-use mindplay\market\Tester;
 
 require dirname(__DIR__) . '/header.php';
 

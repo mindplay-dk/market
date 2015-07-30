@@ -2,6 +2,8 @@
 
 namespace mindplay\market;
 
+use RuntimeException;
+
 class TestFactory
 {
     /**
@@ -26,18 +28,30 @@ class TestFactory
      */
     public function createTests($rel_path, $md_ext = 'md', $html_ext = 'html')
     {
-        $paths = glob("{$this->vendor_path}/{$rel_path}/*.{$md_ext}");
+        $pattern = "{$this->vendor_path}/{$rel_path}/*.{$md_ext}";
+
+        $md_paths = glob($pattern);
 
         $tests = array();
 
-        foreach ($paths as $path) {
+        foreach ($md_paths as $md_path) {
             $test = new Test();
 
-            $test->reference = substr($path, strlen($this->vendor_path) + 1) . '|' . $html_ext;
-            $test->input = file_get_contents($path);
-            $test->expected = file_get_contents(substr($path, 0, -strlen($md_ext)) . $html_ext);
+            $html_path = substr($md_path, 0, -strlen($md_ext)) . $html_ext;
+
+            if (!file_exists($html_path)) {
+                throw new RuntimeException("file not found: {$html_path}");
+            }
+
+            $test->reference = substr($md_path, strlen($this->vendor_path) + 1) . '|' . $html_ext;
+            $test->input = file_get_contents($md_path);
+            $test->expected = file_get_contents($html_path);
 
             $tests[] = $test;
+        }
+
+        if (count($tests) === 0) {
+            throw new RuntimeException("no tests found matching pattern: {$pattern}");
         }
 
         return $tests;

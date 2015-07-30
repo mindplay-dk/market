@@ -1,7 +1,7 @@
 <?php
 
-use mindplay\market\ComposerHelper;
+use mindplay\market\SuiteFactory;
 
 $loader = require __DIR__ . '/vendor/autoload.php';
 
-ComposerHelper::setLoader($loader);
+SuiteFactory::$loader = $loader;

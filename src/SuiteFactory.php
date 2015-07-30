@@ -17,7 +17,7 @@ class SuiteFactory
      */
     public static function create()
     {
-        return new Suite(self::createTargets());
+        return new Suite(self::createTargets(), self::createTests());
     }
 
     /**
@@ -30,5 +30,13 @@ class SuiteFactory
         return array(
             $f->createTarget(new CebeParser(), 'vanilla'),
         );
+    }
+
+    /**
+     * @return Test[]
+     */
+    private static function createTests()
+    {
+        return array();
     }
 }

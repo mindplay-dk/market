@@ -41,7 +41,7 @@ class CebeAdapter implements Adapter
     }
 
     /**
-     * @param Parser|null $implementation
+     * @param Parser $implementation
      */
     protected function __construct(Parser $implementation = null)
     {

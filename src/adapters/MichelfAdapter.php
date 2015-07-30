@@ -32,7 +32,7 @@ class MichelfAdapter implements Adapter
     }
 
     /**
-     * @param MarkdownInterface|null $implementation
+     * @param MarkdownInterface $implementation
      */
     protected function __construct(MarkdownInterface $implementation)
     {

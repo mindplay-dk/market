@@ -5,6 +5,7 @@ namespace mindplay\market;
 use Composer\Autoload\ClassLoader;
 use mindplay\market\adapters\CebeAdapter;
 use mindplay\market\adapters\CiconiaAdapter;
+use mindplay\market\adapters\CommonMarkAdapter;
 use mindplay\market\adapters\ErusevAdapter;
 use mindplay\market\adapters\MichelfAdapter;
 
@@ -55,6 +56,7 @@ class SuiteFactory
             $f->createTarget(CiconiaAdapter::github(), 'github'),
             $f->createTarget(MichelfAdapter::vanilla(), 'vanilla'),
             $f->createTarget(MichelfAdapter::extra(), 'extra'),
+            $f->createTarget(CommonMarkAdapter::vanilla(), 'extra'),
         );
     }
 

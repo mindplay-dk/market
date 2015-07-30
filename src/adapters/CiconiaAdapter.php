@@ -39,6 +39,9 @@ class CiconiaAdapter implements Adapter
         return new self($parser);
     }
 
+    /**
+     * @param Ciconia $parser
+     */
     protected function __construct(Ciconia $parser)
     {
         $this->parser = $parser;

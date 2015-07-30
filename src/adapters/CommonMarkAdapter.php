@@ -4,13 +4,13 @@ namespace mindplay\market\adapters;
 
 use mindplay\market\Adapter;
 
-use Parsedown;
-use ParsedownExtra;
+use League\CommonMark\Converter;
+use League\CommonMark\CommonMarkConverter;
 
-class ErusevAdapter implements Adapter
+class CommonMarkAdapter implements Adapter
 {
     /**
-     * @var Parsedown
+     * @var Converter
      */
     private $parser;
 
@@ -19,21 +19,13 @@ class ErusevAdapter implements Adapter
      */
     public static function vanilla()
     {
-        return new self(new Parsedown());
+        return new self(new CommonMarkConverter());
     }
 
     /**
-     * @return self
+     * @param Converter $implementation
      */
-    public static function extra()
-    {
-        return new self(new ParsedownExtra());
-    }
-
-    /**
-     * @param Parsedown $implementation
-     */
-    protected function __construct(Parsedown $implementation)
+    protected function __construct(Converter $implementation = null)
     {
         $this->parser = $implementation;
     }
@@ -43,7 +35,7 @@ class ErusevAdapter implements Adapter
      */
     public function parse($input)
     {
-        return $this->parser->text($input);
+        return $this->parser->convertToHtml($input);
     }
 
     /**

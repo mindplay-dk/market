@@ -13,6 +13,11 @@ class TargetFactory
     private $loader;
 
     /**
+     * @var string
+     */
+    private $vendor_path;
+
+    /**
      * @var array contents of "composer.lock"
      */
     private $packages;
@@ -20,45 +25,39 @@ class TargetFactory
     /**
      * @param ClassLoader $loader
      */
-    public function __construct(ClassLoader $loader)
+    public function __construct(ClassLoader $loader, $vendor_path)
     {
         $this->loader = $loader;
+        $this->vendor_path = $vendor_path;
         $this->packages = $this->loadPackageInfo();
     }
 
     /**
-     * @param Parser $parser
+     * @param Adapter $adapter
      * @param string $description
      *
      * @return Target
      */
-    public function createTarget(Parser $parser, $description)
+    public function createTarget(Adapter $adapter, $description)
     {
-        $class_name = $parser->getClassName();
+        $class_name = $adapter->getClassName();
 
         $class_path = $this->loader->findFile($class_name);
-
         $class_path = strtr($class_path, DIRECTORY_SEPARATOR, '/');
+        $class_path = substr($class_path, strlen($this->vendor_path) + 1);
 
-static $PATTERN = <<<REGEX
-#(^.*[\/]\w+[\/]\w+)[\/].*#
-REGEX;
+        $parts = explode('/', $class_path);
+        $package_name = $parts[0] . '/' . $parts[1];
 
-        if (preg_match($PATTERN, $class_path, $matches) !== 1) {
-            throw new RuntimeException("unable to get package path for class name: {$class_name}");
+        if (!isset($this->packages[$package_name])) {
+            throw new RuntimeException("internal error: {$package_name} not found in composer.lock ({$class_path})");
         }
-
-        $package_path = $matches[1];
-
-        $parts = explode('/', $package_path);
-        $count = count($parts);
-        $package_name = $parts[$count - 2] . '/' . $parts[$count - 1];
 
         $target = new Target();
 
-        $target->parser = $parser;
+        $target->adapter = $adapter;
         $target->class_name = $class_name;
-        $target->package_path = $package_path;
+        $target->package_path = $this->vendor_path . '/' . $package_name;
         $target->package_name = $package_name;
         $target->version = $this->packages[$target->package_name]['version'];
         $target->time = $this->packages[$target->package_name]['time'];

@@ -3,7 +3,9 @@
 namespace mindplay\market;
 
 use Composer\Autoload\ClassLoader;
-use mindplay\market\parsers\CebeParser;
+use mindplay\market\adapters\CebeAdapter;
+use mindplay\market\adapters\CiconiaAdapter;
+use mindplay\market\adapters\ErusevAdapter;
 
 class SuiteFactory
 {
@@ -11,6 +13,21 @@ class SuiteFactory
      * @var ClassLoader
      */
     public static $loader;
+
+    /**
+     * @var string vendor root path
+     */
+    public static $vendor_path;
+
+    /**
+     * @param ClassLoader $loader
+     * @param string $vendor_path
+     */
+    public static function bootstrap(ClassLoader $loader, $vendor_path)
+    {
+        self::$loader = $loader;
+        self::$vendor_path = strtr($vendor_path, DIRECTORY_SEPARATOR, '/');
+    }
 
     /**
      * @return Suite
@@ -25,10 +42,16 @@ class SuiteFactory
      */
     private static function createTargets()
     {
-        $f = new TargetFactory(self::$loader);
+        $f = new TargetFactory(self::$loader, self::$vendor_path);
 
         return array(
-            $f->createTarget(new CebeParser(), 'vanilla'),
+            $f->createTarget(CebeAdapter::vanilla(), 'vanilla'),
+            $f->createTarget(CebeAdapter::extra(), 'extra'),
+            $f->createTarget(CebeAdapter::github(), 'github'),
+            $f->createTarget(ErusevAdapter::vanilla(), 'vanilla'),
+            $f->createTarget(ErusevAdapter::extra(), 'extra'),
+            $f->createTarget(CiconiaAdapter::vanilla(), 'vanilla'),
+            $f->createTarget(CiconiaAdapter::github(), 'github'),
         );
     }
 

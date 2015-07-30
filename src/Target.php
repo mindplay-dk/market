@@ -4,8 +4,8 @@ namespace mindplay\market;
 
 class Target
 {
-    /** @var Parser */
-    public $parser;
+    /** @var Adapter */
+    public $adapter;
 
     /** @var string target description */
     public $description;

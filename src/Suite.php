@@ -68,12 +68,15 @@ class Suite
     {
         $result = new Result();
 
-        $output = $target->parser->parse($test->input);
+        $output = $target->adapter->parse($test->input);
+
+        $exact = $output === $test->expected;
 
         $result->source = $target;
         $result->test = $test;
         $result->output = $output;
-        $result->success = $this->compareHTML($output, $test->expected);
+        $result->exact = $exact;
+        $result->success = $exact ?: $this->compareHTML($output, $test->expected);
 
         return $result;
     }

@@ -2,7 +2,7 @@
 
 namespace mindplay\market;
 
-interface Parser
+interface Adapter
 {
     /**
      * @param string $input

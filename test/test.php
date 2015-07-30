@@ -1,11 +1,13 @@
 <?php
 
 use Composer\Autoload\ClassLoader;
+
 use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\TargetFactory;
 use mindplay\market\Test;
 use mindplay\market\TestFactory;
+use mindplay\market\adapters\CebeAdapter;
 
 require dirname(__DIR__) . '/header.php';
 
@@ -14,9 +16,9 @@ test(
     function () {
         ok(SuiteFactory::$loader instanceof ClassLoader, 'Composer autoloader reference has been set');
 
-        $factory = new TargetFactory(SuiteFactory::$loader);
+        $factory = new TargetFactory(SuiteFactory::$loader, SuiteFactory::$vendor_path);
 
-        $target = $factory->createTarget(new \mindplay\market\parsers\CebeParser(), 'test');
+        $target = $factory->createTarget(CebeAdapter::vanilla(), 'test');
 
         $expected = strtr(dirname(__DIR__), DIRECTORY_SEPARATOR, '/') . '/vendor/cebe/markdown';
 
@@ -32,9 +34,9 @@ test(
 test(
     'can test parsers',
     function () {
-        $factory = new TargetFactory(SuiteFactory::$loader);
+        $factory = new TargetFactory(SuiteFactory::$loader, SuiteFactory::$vendor_path);
 
-        $target = $factory->createTarget(new \mindplay\market\parsers\CebeParser(), 'test');
+        $target = $factory->createTarget(CebeAdapter::vanilla(), 'test');
 
         $test = new Test();
         $test->input = "# HELLO\n## WORLD\n";
@@ -67,8 +69,21 @@ test(
     function () {
         $suite = SuiteFactory::create();
 
-        ok(count($suite->targets) > 0, 'it has targets');
-        ok(count($suite->tests) > 0, 'it has tests');
+        $results = $suite->run();
+
+        $num_targets = count($suite->targets);
+        $num_tests = count($suite->tests);
+        $num_results = count($results);
+
+        ok($num_targets > 0, 'it has targets');
+        ok($num_tests > 0, 'it has tests');
+        eq($num_targets * $num_tests, $num_results, 'it runs all the tests');
+
+        foreach ($results as $result) {
+            $success = $result->success ? "PASS" : "FAIL";
+
+            echo "{$success}: {$result->source->package_name} [{$result->source->description}] {$result->test->reference}\n";
+        }
     }
 );
 

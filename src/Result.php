@@ -23,4 +23,9 @@ class Result
      * @var bool TRUE, if the test was a success
      */
     public $success;
+
+    /**
+     * @var bool TRUE, if the test was an exact match success
+     */
+    public $exact;
 }

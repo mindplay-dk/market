@@ -25,4 +25,18 @@ class Test
      * @var string
      */
     public $flavor;
+
+    /**
+     * @param string $reference
+     * @param string $input
+     * @param string $expected
+     * @param string $flavor
+     */
+    public function __construct($reference, $input, $expected, $flavor)
+    {
+        $this->reference = $reference;
+        $this->input = $input;
+        $this->expected = $expected;
+        $this->flavor = $flavor;
+    }
 }

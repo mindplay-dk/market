@@ -38,9 +38,12 @@ test(
 test(
     'all targets can produce results',
     function () {
-        $test = new Test();
-        $test->input = "# HELLO\n## WORLD\n";
-        $test->expected = "<h1>HELLO</h1><h2>WORLD</h2>";
+        $test = new Test(
+            '',
+            "# HELLO\n## WORLD\n",
+            "<h1>HELLO</h1><h2>WORLD</h2>",
+            ''
+        );
 
         $suite = new Suite(SuiteFactory::createTargets(), array($test));
 
@@ -95,12 +98,7 @@ test(
         $result->success = true;
         $result->exact = true;
         $result->output = 'output';
-        $result->test = $test = new Test();
-
-        $test->reference = 'reference';
-        $test->input = 'input';
-        $test->expected = 'expected';
-        $test->flavor = 'flavor';
+        $result->test = $test = new Test('reference', 'input', 'expected', 'flavor');
 
         $target->package_name = 'foo/bar';
         $target->version = '1.0.1';

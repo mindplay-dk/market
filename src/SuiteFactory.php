@@ -23,7 +23,7 @@ class SuiteFactory
 
     /**
      * @param ClassLoader $loader
-     * @param string $vendor_path
+     * @param string      $vendor_path
      */
     public static function bootstrap(ClassLoader $loader, $vendor_path)
     {
@@ -47,16 +47,16 @@ class SuiteFactory
         $f = new TargetFactory(self::$loader, self::$vendor_path);
 
         return array(
-            $f->createTarget(CebeAdapter::vanilla(), 'vanilla'),
-            $f->createTarget(CebeAdapter::extra(), 'extra'),
-            $f->createTarget(CebeAdapter::github(), 'github'),
-            $f->createTarget(ErusevAdapter::vanilla(), 'vanilla'),
-            $f->createTarget(ErusevAdapter::extra(), 'extra'),
-            $f->createTarget(CiconiaAdapter::vanilla(), 'vanilla'),
-            $f->createTarget(CiconiaAdapter::github(), 'github'),
-            $f->createTarget(MichelfAdapter::vanilla(), 'vanilla'),
-            $f->createTarget(MichelfAdapter::extra(), 'extra'),
-            $f->createTarget(CommonMarkAdapter::vanilla(), 'extra'),
+            $f->createTarget(CebeAdapter::vanilla(), Flavor::VANILLA),
+            $f->createTarget(CebeAdapter::extra(), Flavor::EXTRA),
+            $f->createTarget(CebeAdapter::github(), Flavor::GITHUB),
+            $f->createTarget(ErusevAdapter::vanilla(), Flavor::VANILLA),
+            $f->createTarget(ErusevAdapter::extra(), Flavor::EXTRA),
+            $f->createTarget(CiconiaAdapter::vanilla(), Flavor::VANILLA),
+            $f->createTarget(CiconiaAdapter::github(), Flavor::GITHUB),
+            $f->createTarget(MichelfAdapter::vanilla(), Flavor::VANILLA),
+            $f->createTarget(MichelfAdapter::extra(), Flavor::EXTRA),
+            $f->createTarget(CommonMarkAdapter::vanilla(), Flavor::EXTRA),
         );
     }
 

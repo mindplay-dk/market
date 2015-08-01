@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4",
         "michelf/php-markdown": ">=1.5",
         "league/commonmark": ">=0.10.0",
         "erusev/parsedown": ">=1.5",

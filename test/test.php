@@ -3,6 +3,7 @@
 use Composer\Autoload\ClassLoader;
 
 use mindplay\market\Flavor;
+use mindplay\market\ResultGroup;
 use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\TargetFactory;
@@ -33,21 +34,21 @@ test(
 );
 
 test(
-    'can test parsers',
+    'all targets can produce results',
     function () {
-        $factory = new TargetFactory(SuiteFactory::$loader, SuiteFactory::$vendor_path);
-
-        $target = $factory->createTarget(CebeAdapter::vanilla(), 'test');
-
         $test = new Test();
         $test->input = "# HELLO\n## WORLD\n";
         $test->expected = "<h1>HELLO</h1><h2>WORLD</h2>";
 
-        $suite = new Suite(array($target), array($test));
+        $suite = new Suite(SuiteFactory::createTargets(), array($test));
 
-        $results = $suite->run();
+        $groups = $suite->run();
 
-        eq($results[0]->success, true, 'completed a simple test');
+        foreach ($groups as $group) {
+            foreach ($group->results as $result) {
+                ok($result->success, "target {$result->target->package_name} {$result->target->version} works");
+            }
+        }
     }
 );
 
@@ -67,25 +68,15 @@ test(
 );
 
 test(
-    'can configure test-suite',
+    'can boostrap the test-suite',
     function () {
         $suite = SuiteFactory::create();
 
-        $results = $suite->run();
-
         $num_targets = count($suite->targets);
         $num_tests = count($suite->tests);
-        $num_results = count($results);
 
         ok($num_targets > 0, 'it has targets');
         ok($num_tests > 0, 'it has tests');
-        eq($num_targets * $num_tests, $num_results, 'it runs all the tests');
-
-        foreach ($results as $result) {
-            $success = $result->success ? "PASS" : "FAIL";
-
-            echo "{$success}: {$result->target->package_name} [{$result->target->flavor}] {$result->test->reference}\n";
-        }
     }
 );
 

@@ -42,7 +42,7 @@ class SuiteFactory
     /**
      * @return Target[]
      */
-    private static function createTargets()
+    public static function createTargets()
     {
         $f = new TargetFactory(self::$loader, self::$vendor_path);
 
@@ -63,7 +63,7 @@ class SuiteFactory
     /**
      * @return Test[]
      */
-    private static function createTests()
+    public static function createTests()
     {
         $f = new TestFactory(dirname(__DIR__) . '/vendor');
 

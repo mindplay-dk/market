@@ -25,19 +25,28 @@ class Suite
     }
 
     /**
-     * @return Result[]
+     * @return ResultGroup[] lists of result groups for each Target tested
      */
     public function run()
     {
-        $results = array();
+        /**
+         * @var ResultGroup[] $groups
+         */
+
+        $groups = array();
 
         foreach ($this->targets as $target) {
+            $group = new ResultGroup();
+            $group->target = $target;
+
             foreach ($this->tests as $test) {
-                $results[] = $this->test($target, $test);
+                $group->results[] = $this->test($target, $test);
             }
+
+            $groups[] = $group;
         }
 
-        return $results;
+        return $groups;
     }
 
     /**

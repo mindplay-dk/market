@@ -56,7 +56,7 @@ class SuiteFactory
             $f->createTarget(CiconiaAdapter::github(), Flavor::GITHUB),
             $f->createTarget(MichelfAdapter::vanilla(), Flavor::VANILLA),
             $f->createTarget(MichelfAdapter::extra(), Flavor::EXTRA),
-            $f->createTarget(CommonMarkAdapter::vanilla(), Flavor::EXTRA),
+            $f->createTarget(CommonMarkAdapter::vanilla(), Flavor::COMMON),
         );
     }
 
@@ -65,13 +65,14 @@ class SuiteFactory
      */
     public static function createTests()
     {
-        $target_factory = new TargetFactory(self::$loader, self::$vendor_path);
+//        $target_factory = new TargetFactory(self::$loader, self::$vendor_path);
 
-        $commonmark_target = $target_factory->createTarget(CommonMarkAdapter::vanilla(), Flavor::EXTRA);
+//        $commonmark_target = $target_factory->createTarget(CommonMarkAdapter::vanilla(), Flavor::COMMON);
 
         $f = new TestFactory(dirname(__DIR__) . '/vendor');
 
         $reference_tests = array_merge(
+            $f->fromSpec(self::$vendor_path . '/jgm/CommonMark/spec.txt', Flavor::COMMON),
             $f->fromFiles('cebe/markdown/tests/markdown-data', Flavor::VANILLA),
             $f->fromFiles('cebe/markdown/tests/extra-data', Flavor::EXTRA),
             $f->fromFiles('cebe/markdown/tests/github-data', Flavor::GITHUB),

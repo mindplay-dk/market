@@ -75,6 +75,17 @@ test(
 );
 
 test(
+    'can load CommonMark specs',
+    function () {
+        $factory = new TestFactory(dirname(__DIR__) . '/vendor');
+
+        $tests = $factory->fromSpec(dirname(__DIR__) . '/vendor/jgm/CommonMark/spec.txt', Flavor::COMMON);
+
+        eq($tests[0]->reference, 'jgm/CommonMark/spec.txt#1');
+    }
+);
+
+test(
     'can derive test data from targets',
     function () {
         $test_factory = new TestFactory(__DIR__);

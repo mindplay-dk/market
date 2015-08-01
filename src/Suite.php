@@ -2,6 +2,8 @@
 
 namespace mindplay\market;
 
+use Exception;
+
 class Suite
 {
     /**
@@ -77,12 +79,19 @@ class Suite
     {
         $result = new Result();
 
-        $output = $target->adapter->parse($test->input);
+        $output = null;
+        $error = null;
+
+        try {
+            $output = $target->adapter->parse($test->input);
+        } catch (Exception $e) {
+            $error = $e->getFile() . '#' . $e->getLine() . ': ' . $e->getMessage();
+        }
 
         $exact = $output === $test->expected;
 
         $result->test = $test;
-        $result->output = $output;
+        $result->output = $output ?: "ERROR: {$error}";
         $result->exact = $exact;
         $result->success = $exact ?: self::compareHTML($output, $test->expected);
 

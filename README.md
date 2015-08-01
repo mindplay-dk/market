@@ -15,4 +15,3 @@ to make the results presentable.
  * presentation
  * visual diff
  * persistent results (history)
- * integrate [mdtest](https://github.com/michelf/mdtest/)

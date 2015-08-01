@@ -10,5 +10,6 @@ abstract class Flavor
     const VANILLA = 'VANILLA';
     const EXTRA = 'EXTRA';
     const GITHUB = 'GITHUB';
+    const COMMON = 'COMMON';
     const OTHER = 'OTHER';
 }

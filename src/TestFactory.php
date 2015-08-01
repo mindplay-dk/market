@@ -95,4 +95,78 @@ class TestFactory
             $tests
         );
     }
+
+    /**
+     * Create a list of tests from the CommonMark specification
+     *
+     * https://github.com/jgm/CommonMark/blob/master/spec.txt
+     *
+     * @param string $path absolute path to commonmark spec ("spec.txt")
+     * @param string $flavor Markdown flavor
+     *
+     * @return Test[]
+     */
+    public function fromSpec($path, $flavor)
+    {
+        $f = fopen($path, 'r');
+
+        $markdown = '';
+        $html = '';
+        $index = 0;
+        $filename = substr($path, strlen($this->vendor_path) + 1);
+
+        static $WAITING = 0;
+        static $IN_MARKDOWN = 1;
+        static $IN_HTML = 2;
+
+        $state = $WAITING;
+
+        $tests = array();
+
+        while (!feof($f)) {
+            $line = str_replace("\r\n", "\n", fgets($f));
+
+            $is_marker = ($line === ".\n");
+
+            switch ($state) {
+                case $WAITING:
+                    if ($is_marker) {
+                        $state = $IN_MARKDOWN;
+                    }
+                    break;
+
+                case $IN_MARKDOWN:
+                    if ($is_marker) {
+                        $state = $IN_HTML;
+                    } else {
+                        $markdown .= $line;
+                    }
+                    break;
+
+                case $IN_HTML:
+                    if ($is_marker) {
+                        $index += 1;
+
+                        $tests[] = new Test($filename . '#' . $index, $markdown, $html, $flavor);
+
+                        $markdown = '';
+                        $html = '';
+
+                        $state = $WAITING;
+                    } else {
+                        $html .= $line;
+                    }
+                    break;
+
+                default:
+                    throw new RuntimeException("internal error - undefined state: {$state}");
+            }
+        }
+
+        if (count($tests) === 0) {
+            throw new RuntimeException("no markers found in specification: {$path}");
+        }
+
+        return $tests;
+    }
 }

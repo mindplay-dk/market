@@ -7,7 +7,7 @@ class Result
     /**
      * @var Target
      */
-    public $source;
+    public $target;
 
     /**
      * @var Test

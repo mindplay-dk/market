@@ -84,7 +84,7 @@ test(
         foreach ($results as $result) {
             $success = $result->success ? "PASS" : "FAIL";
 
-            echo "{$success}: {$result->source->package_name} [{$result->source->flavor}] {$result->test->reference}\n";
+            echo "{$success}: {$result->target->package_name} [{$result->target->flavor}] {$result->test->reference}\n";
         }
     }
 );

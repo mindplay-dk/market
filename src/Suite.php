@@ -72,7 +72,7 @@ class Suite
 
         $exact = $output === $test->expected;
 
-        $result->source = $target;
+        $result->target = $target;
         $result->test = $test;
         $result->output = $output;
         $result->exact = $exact;

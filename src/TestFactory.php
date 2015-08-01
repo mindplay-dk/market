@@ -20,6 +20,8 @@ class TestFactory
     }
 
     /**
+     * Create a list of tests from a set of test-files.
+     *
      * @param string $rel_path relative path to test files (from vendor root)
      * @param string $flavor   Markdown flavor
      * @param string $md_ext   markdown file extension
@@ -27,7 +29,7 @@ class TestFactory
      *
      * @return Test[]
      */
-    public function createTests($rel_path, $flavor, $md_ext = 'md', $html_ext = 'html')
+    public function fromFiles($rel_path, $flavor, $md_ext = 'md', $html_ext = 'html')
     {
         $pattern = "{$this->vendor_path}/{$rel_path}/*.{$md_ext}";
 
@@ -48,11 +50,36 @@ class TestFactory
 
             $tests[] = new Test($reference, $input, $expected, $flavor);
         }
-        
+
         if (count($tests) === 0) {
             throw new RuntimeException("no tests found matching pattern: {$pattern}");
         }
 
         return $tests;
+    }
+
+    /**
+     * Derive a list of tests using a given Target as the source of truth.
+     *
+     * @param Target $target
+     * @param Test[] $tests list of tests from which to derive new tests
+     *
+     * @return Test[]
+     */
+    public function fromTarget(Target $target, $tests)
+    {
+        return array_map(
+            function (Test $test) use ($target) {
+                $result = Suite::test($test, $target);
+
+                return new Test(
+                    "{$target->package_name}/{$target->version}/{$target->flavor}#{$test->reference}",
+                    $test->input,
+                    $result->output,
+                    $target->flavor
+                );
+            },
+            $tests
+        );
     }
 }

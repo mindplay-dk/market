@@ -64,13 +64,38 @@ test(
     function () {
         $factory = new TestFactory(__DIR__);
 
-        $tests = $factory->createTests('sample-data', Flavor::VANILLA);
+        $tests = $factory->fromFiles('sample-data', Flavor::VANILLA);
 
         eq(count($tests), 1, 'it finds the sample test-case');
         eq($tests[0]->reference, 'sample-data/headline.md|html', 'it references the source files');
         eq($tests[0]->input, file_get_contents(__DIR__ . '/sample-data/headline.md'), 'test input loaded');
         eq($tests[0]->expected, file_get_contents(__DIR__ . '/sample-data/headline.html'), 'expected output loaded');
         eq($tests[0]->flavor, Flavor::VANILLA, 'it has a flavor :-)');
+    }
+);
+
+
+test(
+    'can derive test data from targets',
+    function () {
+        $test_factory = new TestFactory(__DIR__);
+
+        $tests = $test_factory->fromFiles('sample-data', Flavor::VANILLA);
+
+        $target_factory = new TargetFactory(SuiteFactory::$loader, SuiteFactory::$vendor_path);
+
+        $target = $target_factory->createTarget(CebeAdapter::vanilla(), Flavor::VANILLA);
+
+        $tests = $test_factory->fromTarget($target, $tests);
+
+        $input = file_get_contents(__DIR__ . '/sample-data/headline.md');
+        $expected = $target->adapter->parse($input);
+
+        eq(count($tests), 1, 'it derives a test-case');
+        ok(fnmatch('cebe/markdown/*/VANILLA#sample-data/headline.md|html', $tests[0]->reference), 'it references the original source file');
+        eq($tests[0]->input, $input, 'test input loaded');
+        eq($tests[0]->expected, $expected, 'expected output generated');
+        eq($tests[0]->flavor, Flavor::VANILLA, 'it has the same flavor');
     }
 );
 

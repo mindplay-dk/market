@@ -65,20 +65,30 @@ class SuiteFactory
      */
     public static function createTests()
     {
+        $target_factory = new TargetFactory(self::$loader, self::$vendor_path);
+
+        $commonmark_target = $target_factory->createTarget(CommonMarkAdapter::vanilla(), Flavor::EXTRA);
+
         $f = new TestFactory(dirname(__DIR__) . '/vendor');
 
-        // TODO create tests from CommonMark's spec file
+        $reference_tests = array_merge(
+            $f->fromFiles('cebe/markdown/tests/markdown-data', Flavor::VANILLA),
+            $f->fromFiles('cebe/markdown/tests/extra-data', Flavor::EXTRA),
+            $f->fromFiles('cebe/markdown/tests/github-data', Flavor::GITHUB),
+            $f->fromFiles('erusev/parsedown/test/data', Flavor::GITHUB),
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/core', Flavor::VANILLA, 'md', 'out'),
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', Flavor::VANILLA, 'md', 'out'),
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/gfm', Flavor::GITHUB, 'md', 'out'),
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', Flavor::VANILLA, 'md', 'out'),
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', Flavor::GITHUB, 'md', 'out')
+        );
+
+        // TODO create tests from CommonMark's spec file and run the reference target below against that
+        // instead of against the reference tests
 
         return array_merge(
-            $f->createTests('cebe/markdown/tests/markdown-data', Flavor::VANILLA),
-            $f->createTests('cebe/markdown/tests/extra-data', Flavor::EXTRA),
-            $f->createTests('cebe/markdown/tests/github-data', Flavor::GITHUB),
-            $f->createTests('erusev/parsedown/test/data', Flavor::GITHUB),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core', Flavor::VANILLA, 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', Flavor::VANILLA, 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/gfm', Flavor::GITHUB, 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', Flavor::VANILLA, 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', Flavor::GITHUB, 'md', 'out')
+            $reference_tests,
+            $f->fromTarget($commonmark_target, $reference_tests)
         );
     }
 }

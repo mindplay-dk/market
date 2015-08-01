@@ -16,7 +16,7 @@ class Suite
 
     /**
      * @param Target[] $targets
-     * @param Test[] $tests
+     * @param Test[]   $tests
      */
     public function __construct($targets, $tests)
     {
@@ -40,7 +40,7 @@ class Suite
             $group->target = $target;
 
             foreach ($this->tests as $test) {
-                $group->results[] = $this->test($target, $test);
+                $group->results[] = self::test($test, $target);
             }
 
             $groups[] = $group;
@@ -59,7 +59,7 @@ class Suite
      *
      * @return bool
      */
-    protected function compareHTML($actual, $expected)
+    protected static function compareHTML($actual, $expected)
     {
         static $FROM = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
         static $TO = ['>', '<', '\\1', '><'];
@@ -68,12 +68,12 @@ class Suite
     }
 
     /**
+     * @param Test   $test
      * @param Target $target
-     * @param Test $test
      *
      * @return Result
      */
-    protected function test(Target $target, Test $test)
+    public static function test(Test $test, Target $target)
     {
         $result = new Result();
 
@@ -84,7 +84,7 @@ class Suite
         $result->test = $test;
         $result->output = $output;
         $result->exact = $exact;
-        $result->success = $exact ?: $this->compareHTML($output, $test->expected);
+        $result->success = $exact ?: self::compareHTML($output, $test->expected);
 
         return $result;
     }

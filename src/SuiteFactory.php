@@ -80,15 +80,20 @@ class SuiteFactory
             $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', Flavor::VANILLA, 'md', 'out'),
             $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/gfm', Flavor::GITHUB, 'md', 'out'),
             $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', Flavor::VANILLA, 'md', 'out'),
-            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', Flavor::GITHUB, 'md', 'out')
+            $f->fromFiles('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', Flavor::GITHUB, 'md', 'out'),
+            $f->fromFiles('michelf/mdtest/Markdown.mdtest', Flavor::VANILLA, 'text', ['html', 'xhtml']),
+            $f->fromFiles('michelf/mdtest/PHP Markdown.mdtest', Flavor::OTHER, 'text', ['html', 'xhtml']),
+            $f->fromFiles('michelf/mdtest/PHP Markdown Extra.mdtest', Flavor::EXTRA, 'text', ['html', 'xhtml'])
         );
+
+        return $reference_tests;
 
         // TODO create tests from CommonMark's spec file and run the reference target below against that
         // instead of against the reference tests
 
-        return array_merge(
-            $reference_tests,
-            $f->fromTarget($commonmark_target, $reference_tests)
-        );
+//        return array_merge(
+//            $reference_tests,
+//            $f->fromTarget($commonmark_target, $reference_tests)
+//        );
     }
 }

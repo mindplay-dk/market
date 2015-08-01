@@ -74,7 +74,6 @@ test(
     }
 );
 
-
 test(
     'can derive test data from targets',
     function () {

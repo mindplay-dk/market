@@ -22,10 +22,10 @@ class TestFactory
     /**
      * Create a list of tests from a set of test-files.
      *
-     * @param string $rel_path relative path to test files (from vendor root)
-     * @param string $flavor   Markdown flavor
-     * @param string $md_ext   markdown file extension
-     * @param string $html_ext HTML file extension
+     * @param string          $rel_path relative path to test files (from vendor root)
+     * @param string          $flavor   Markdown flavor
+     * @param string          $md_ext   markdown file extension
+     * @param string|string[] $html_ext one or more possible HTML file extensions
      *
      * @return Test[]
      */
@@ -37,18 +37,31 @@ class TestFactory
 
         $tests = array();
 
-        foreach ($md_paths as $md_path) {
-            $html_path = substr($md_path, 0, -strlen($md_ext)) . $html_ext;
+        $html_exts = (array)$html_ext;
 
-            if (!file_exists($html_path)) {
-                throw new RuntimeException("file not found: {$html_path}");
+        foreach ($md_paths as $md_path) {
+            $found = false;
+
+            foreach ($html_exts as $html_ext) {
+                $html_path = substr($md_path, 0, -strlen($md_ext)) . $html_ext;
+
+                if (!file_exists($html_path)) {
+                    continue;
+                }
+
+                $reference = substr($md_path, strlen($this->vendor_path) + 1) . '|' . $html_ext;
+                $input = file_get_contents($md_path);
+                $expected = file_get_contents($html_path);
+
+                $tests[] = new Test($reference, $input, $expected, $flavor);
+
+                $found = true;
             }
 
-            $reference = substr($md_path, strlen($this->vendor_path) + 1) . '|' . $html_ext;
-            $input = file_get_contents($md_path);
-            $expected = file_get_contents($html_path);
-
-            $tests[] = new Test($reference, $input, $expected, $flavor);
+            if (!$found) {
+                throw new RuntimeException("no matching file found for: {$md_path}"
+                    . " (tried extensions: " . implode(', ', $html_exts) . ")");
+            }
         }
 
         if (count($tests) === 0) {

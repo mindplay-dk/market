@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "84642c617c1c60ebdfabf0f58440b8cc",
+    "hash": "ab842648a3c5990cc852bfd40ad09d51",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -201,6 +201,17 @@
             "time": "2015-01-25 14:52:34"
         },
         {
+            "name": "jgm/CommonMark",
+            "version": "dev-28c4cb0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jgm/CommonMark.git",
+                "reference": "28c4cb0d9efbc83ca06b1c2570fa0628f4426e3a"
+            },
+            "type": "library",
+            "time": "2015-07-15 00:21:19"
+        },
+        {
             "name": "kzykhys/ciconia",
             "version": "v1.0.3",
             "source": {
@@ -316,6 +327,17 @@
                 "parser"
             ],
             "time": "2015-07-25 14:37:05"
+        },
+        {
+            "name": "michelf/mdtest",
+            "version": "dev-ad5ec6c",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/mdtest.git",
+                "reference": "ad5ec6cbbae3d7f3cfd91422e93be2bd5cc9c843"
+            },
+            "type": "library",
+            "time": "2014-12-08 02:45:45"
         },
         {
             "name": "michelf/php-markdown",
@@ -522,10 +544,14 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "michelf/mdtest": 20,
+        "jgm/commonmark": 20,
         "mindplay/testies": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.4"
+    },
     "platform-dev": []
 }

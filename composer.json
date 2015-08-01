@@ -17,7 +17,9 @@
         "erusev/parsedown-extra": ">=0.7",
         "kzykhys/ciconia": ">=1.0",
         "cebe/markdown": ">=1.1",
-        "cogpowered/finediff": "~0.3"
+        "cogpowered/finediff": "~0.3",
+        "michelf/mdtest": "dev-ad5ec6c",
+        "jgm/CommonMark": "dev-28c4cb0"
     },
     "require-dev": {
         "mindplay/testies": "dev-master"
@@ -26,5 +28,31 @@
         "psr-4": {
             "mindplay\\market\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "michelf/mdtest",
+                "version": "dev-ad5ec6c",
+                "source": {
+                    "url": "https://github.com/michelf/mdtest.git",
+                    "type": "git",
+                    "reference": "ad5ec6cbbae3d7f3cfd91422e93be2bd5cc9c843"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jgm/CommonMark",
+                "version": "dev-28c4cb0",
+                "source": {
+                    "url": "https://github.com/jgm/CommonMark.git",
+                    "type": "git",
+                    "reference": "28c4cb0d9efbc83ca06b1c2570fa0628f4426e3a"
+                }
+            }
+        }
+    ]
 }

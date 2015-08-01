@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab842648a3c5990cc852bfd40ad09d51",
+    "hash": "72f7df699f33e2710a0ab34f673c3d4b",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -202,14 +202,14 @@
         },
         {
             "name": "jgm/CommonMark",
-            "version": "dev-28c4cb0",
+            "version": "dev-3525cc6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jgm/CommonMark.git",
-                "reference": "28c4cb0d9efbc83ca06b1c2570fa0628f4426e3a"
+                "reference": "3525cc6d02fc4435f62bb096f52591203f503339"
             },
             "type": "library",
-            "time": "2015-07-15 00:21:19"
+            "time": "2015-07-28 16:41:17"
         },
         {
             "name": "kzykhys/ciconia",

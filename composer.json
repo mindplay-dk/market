@@ -19,7 +19,7 @@
         "cebe/markdown": ">=1.1",
         "cogpowered/finediff": "~0.3",
         "michelf/mdtest": "dev-ad5ec6c",
-        "jgm/CommonMark": "dev-28c4cb0"
+        "jgm/CommonMark": "dev-3525cc6"
     },
     "require-dev": {
         "mindplay/testies": "dev-master"
@@ -46,11 +46,11 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "dev-28c4cb0",
+                "version": "dev-3525cc6",
                 "source": {
                     "url": "https://github.com/jgm/CommonMark.git",
                     "type": "git",
-                    "reference": "28c4cb0d9efbc83ca06b1c2570fa0628f4426e3a"
+                    "reference": "3525cc6d02fc4435f62bb096f52591203f503339"
                 }
             }
         }

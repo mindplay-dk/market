@@ -24,6 +24,7 @@ class TargetFactory
 
     /**
      * @param ClassLoader $loader
+     * @param string $vendor_path absolute root path of Composer vendor folder
      */
     public function __construct(ClassLoader $loader, $vendor_path)
     {
@@ -34,11 +35,11 @@ class TargetFactory
 
     /**
      * @param Adapter $adapter
-     * @param string $description
+     * @param string $flavor Markdown flavor
      *
      * @return Target
      */
-    public function createTarget(Adapter $adapter, $description)
+    public function createTarget(Adapter $adapter, $flavor)
     {
         $class_name = $adapter->getClassName();
 
@@ -61,7 +62,7 @@ class TargetFactory
         $target->package_name = $package_name;
         $target->version = $this->packages[$target->package_name]['version'];
         $target->time = $this->packages[$target->package_name]['time'];
-        $target->description = $description;
+        $target->flavor = $flavor;
 
         return $target;
     }

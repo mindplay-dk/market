@@ -2,6 +2,7 @@
 
 use Composer\Autoload\ClassLoader;
 
+use mindplay\market\Flavor;
 use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\TargetFactory;
@@ -18,7 +19,7 @@ test(
 
         $factory = new TargetFactory(SuiteFactory::$loader, SuiteFactory::$vendor_path);
 
-        $target = $factory->createTarget(CebeAdapter::vanilla(), 'test');
+        $target = $factory->createTarget(CebeAdapter::vanilla(), Flavor::VANILLA);
 
         $expected = strtr(dirname(__DIR__), DIRECTORY_SEPARATOR, '/') . '/vendor/cebe/markdown';
 
@@ -27,7 +28,7 @@ test(
         eq($target->class_name, \cebe\markdown\Markdown::class);
         ok(strlen($target->version) >= 1, 'it has a version number');
         eq(strlen($target->time), 19, 'it has a timestamp');
-        eq($target->description, 'test', 'description applied');
+        eq($target->flavor, Flavor::VANILLA, 'flavor applied');
     }
 );
 
@@ -55,12 +56,13 @@ test(
     function () {
         $factory = new TestFactory(__DIR__);
 
-        $tests = $factory->createTests('sample-data');
+        $tests = $factory->createTests('sample-data', Flavor::VANILLA);
 
         eq(count($tests), 1, 'it finds the sample test-case');
         eq($tests[0]->reference, 'sample-data/headline.md|html', 'it references the source files');
         eq($tests[0]->input, file_get_contents(__DIR__ . '/sample-data/headline.md'), 'test input loaded');
         eq($tests[0]->expected, file_get_contents(__DIR__ . '/sample-data/headline.html'), 'expected output loaded');
+        eq($tests[0]->flavor, Flavor::VANILLA, 'it has a flavor :-)');
     }
 );
 
@@ -82,7 +84,7 @@ test(
         foreach ($results as $result) {
             $success = $result->success ? "PASS" : "FAIL";
 
-            echo "{$success}: {$result->source->package_name} [{$result->source->description}] {$result->test->reference}\n";
+            echo "{$success}: {$result->source->package_name} [{$result->source->flavor}] {$result->test->reference}\n";
         }
     }
 );

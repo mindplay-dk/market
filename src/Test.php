@@ -18,4 +18,11 @@ class Test
      * @var string expected HTML output
      */
     public $expected;
+
+    /**
+     * One of the {@see Flavor} constants
+     *
+     * @var string
+     */
+    public $flavor;
 }

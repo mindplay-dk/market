@@ -70,15 +70,15 @@ class SuiteFactory
         // TODO create tests from CommonMark's spec file
 
         return array_merge(
-            $f->createTests('cebe/markdown/tests/markdown-data'),
-            $f->createTests('cebe/markdown/tests/extra-data'),
-            $f->createTests('cebe/markdown/tests/github-data'),
-            $f->createTests('erusev/parsedown/test/data'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core', 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/gfm', 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', 'md', 'out'),
-            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', 'md', 'out')
+            $f->createTests('cebe/markdown/tests/markdown-data', Flavor::VANILLA),
+            $f->createTests('cebe/markdown/tests/extra-data', Flavor::EXTRA),
+            $f->createTests('cebe/markdown/tests/github-data', Flavor::GITHUB),
+            $f->createTests('erusev/parsedown/test/data', Flavor::GITHUB),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core', Flavor::VANILLA, 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/core/markdown-testsuite', Flavor::VANILLA, 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/gfm', Flavor::GITHUB, 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/core', Flavor::VANILLA, 'md', 'out'),
+            $f->createTests('kzykhys/ciconia/test/Ciconia/Resources/options/strict/gfm', Flavor::GITHUB, 'md', 'out')
         );
     }
 }

@@ -27,6 +27,11 @@ class Test
     public $flavor;
 
     /**
+     * @var string SHA1 hash of the Markdown input
+     */
+    public $hash;
+
+    /**
      * @param string $reference
      * @param string $input
      * @param string $expected
@@ -38,5 +43,6 @@ class Test
         $this->input = $input;
         $this->expected = $expected;
         $this->flavor = $flavor;
+        $this->hash = sha1($input);
     }
 }

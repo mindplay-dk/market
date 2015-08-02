@@ -67,10 +67,8 @@ class SuiteFactory
     {
         $f = new TestFactory(dirname(__DIR__) . '/vendor');
 
-        $commonmark_tests = $f->fromSpec(self::$vendor_path . '/jgm/CommonMark/spec.txt', Flavor::COMMON);
-
-        $reference_tests = array_merge(
-            $commonmark_tests,
+        return array_merge(
+            $f->fromSpec(self::$vendor_path . '/jgm/CommonMark/spec.txt', Flavor::COMMON),
             $f->fromFiles('cebe/markdown/tests/markdown-data', Flavor::VANILLA),
             $f->fromFiles('cebe/markdown/tests/extra-data', Flavor::EXTRA),
             $f->fromFiles('cebe/markdown/tests/github-data', Flavor::GITHUB),
@@ -83,20 +81,6 @@ class SuiteFactory
             $f->fromFiles('michelf/mdtest/Markdown.mdtest', Flavor::VANILLA, 'text', ['html', 'xhtml']),
             $f->fromFiles('michelf/mdtest/PHP Markdown.mdtest', Flavor::OTHER, 'text', ['html', 'xhtml']),
             $f->fromFiles('michelf/mdtest/PHP Markdown Extra.mdtest', Flavor::EXTRA, 'text', ['html', 'xhtml'])
-        );
-
-        // TODO still not sure this is right.
-        // should the CommonMark implementation get special treatment as a reference?
-        // or is this covered by (eventually) being able to compare the output of any
-        // target against the output of another?
-
-        $target_factory = new TargetFactory(self::$loader, self::$vendor_path);
-
-        $commonmark_target = $target_factory->createTarget(CommonMarkAdapter::vanilla(), Flavor::COMMON);
-
-        return array_merge(
-            $reference_tests,
-            $f->fromTarget($commonmark_target, $commonmark_tests)
         );
     }
 }

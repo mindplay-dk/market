@@ -3,6 +3,7 @@
 namespace mindplay\market;
 
 use Exception;
+use RuntimeException;
 
 class Suite
 {
@@ -22,6 +23,9 @@ class Suite
      */
     public function __construct($targets, $tests)
     {
+        $this->validateTargets($targets);
+        $this->validateTests($tests);
+
         $this->targets = $targets;
         $this->tests = $tests;
     }
@@ -96,5 +100,41 @@ class Suite
         $result->success = $exact ?: self::compareHTML($output, $test->expected);
 
         return $result;
+    }
+
+    /**
+     * @param Target[] $targets
+     */
+    private function validateTargets($targets)
+    {
+        $hash = array();
+
+        foreach ($targets as $target) {
+            $id = implode('|', array($target->package_name, $target->version, $target->flavor));
+
+            if (isset($hash[$id])) {
+                throw new RuntimeException("duplicate Target in registry: " . print_r($target, true));
+            }
+
+            $hash[$id] = true;
+        }
+    }
+
+    /**
+     * @param Test[] $tests
+     */
+    private function validateTests($tests)
+    {
+        $hash = array();
+
+        foreach ($tests as $test) {
+            $id = $test->reference;
+
+            if (isset($hash[$id])) {
+                throw new RuntimeException("duplicate Test in registry: " . print_r($test, true));
+            }
+
+            $hash[$id] = true;
+        }
     }
 }

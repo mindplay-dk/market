@@ -2,10 +2,10 @@
 
 use Composer\Autoload\ClassLoader;
 use mindplay\market\adapters\CebeAdapter;
-use mindplay\market\ResultGroupSerializer;
 use mindplay\market\Flavor;
 use mindplay\market\Result;
 use mindplay\market\ResultGroup;
+use mindplay\market\ResultGroupSerializer;
 use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\Target;
@@ -102,7 +102,8 @@ test(
         $expected = $target->adapter->parse($input);
 
         eq(count($tests), 1, 'it derives a test-case');
-        ok(fnmatch('cebe/markdown/*/VANILLA#sample-data/headline.md|html', $tests[0]->reference), 'it references the original source file');
+        ok(fnmatch('cebe/markdown/*/VANILLA#sample-data/headline.md|html', $tests[0]->reference),
+            'it references the original source file');
         eq($tests[0]->input, $input, 'test input loaded');
         eq($tests[0]->expected, $expected, 'expected output generated');
         eq($tests[0]->flavor, Flavor::VANILLA, 'it has the same flavor');
@@ -119,6 +120,37 @@ test(
 
         ok($num_targets > 0, 'it has targets');
         ok($num_tests > 0, 'it has tests');
+    }
+);
+
+test(
+    'should throw for duplicates in test suite',
+    function () {
+        $target_a = new Target();
+        $target_a->package_name = 'foo/bar';
+        $target_a->version = '0.0.1';
+        $target_a->flavor = Flavor::VANILLA;
+
+        $target_b = clone $target_a;
+
+        $test_a = new Test('foo', 'a', 'a', Flavor::VANILLA);
+        $test_b = new Test('foo', 'b', 'b', Flavor::EXTRA);
+
+        expect(
+            RuntimeException::class,
+            'should throw for duplicate targets',
+            function () use ($target_a, $target_b, $test_a) {
+                $suite = new Suite(array($target_a, $target_b), array($test_a));
+            }
+        );
+
+        expect(
+            RuntimeException::class,
+            'should throw for duplicate tests',
+            function () use ($target_a, $test_a, $test_b) {
+                $suite = new Suite(array($target_a), array($test_a, $test_b));
+            }
+        );
     }
 );
 
@@ -165,6 +197,50 @@ test(
         );
 
         eq(json_decode($json, true), $expected);
+    }
+);
+
+test(
+    'test-base metrics',
+    function () {
+        /**
+         * @var $distinct Test[][]
+         * @var $dupes    Test[][]
+         */
+
+        $tests = SuiteFactory::createTests();
+
+        $distinct = array();
+
+        foreach ($tests as $test) {
+            $distinct[$test->hash][] = $test;
+        }
+
+        $dupes = array_filter(
+            $distinct,
+            function ($tests) {
+                return count($tests) > 1;
+            }
+        );
+
+        $num_dupes = array_sum(
+            array_map(
+                function ($tests) {
+                    return count($tests);
+                },
+                $dupes
+            )
+        );
+
+        echo '* total number of Markdown tests installed: ' . count($tests) . "\n";
+        echo '* number of Markdown tests duplicating another test: ' . $num_dupes . "\n";
+
+//        foreach ($dupes as $duped_tests) {
+//            echo count($duped_tests) . " duplicates:\n";
+//            foreach ($duped_tests as $duped_test) {
+//                echo "- " . $duped_test->reference . "\n";
+//            }
+//        }
     }
 );
 

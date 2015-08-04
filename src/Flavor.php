@@ -12,4 +12,12 @@ abstract class Flavor
     const GITHUB = 'GITHUB';
     const COMMON = 'COMMON';
     const OTHER = 'OTHER';
+
+    public static $ALL = array(
+        self::VANILLA,
+        self::EXTRA,
+        self::GITHUB,
+        self::COMMON,
+        self::OTHER,
+    );
 }

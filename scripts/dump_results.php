@@ -1,6 +1,6 @@
 <?php
 
-use mindplay\market\ResultGroupSerializer;
+use mindplay\market\Flavor;
 use mindplay\market\SuiteFactory;
 
 require dirname(__DIR__) . '/header.php';
@@ -14,14 +14,38 @@ echo "Running {$num_tests} tests against {$num_targets} targets...\n\n";
 
 $root = dirname(__DIR__) . '/webroot/results';
 
-$groups = $suite->run();
+$results = $suite->run();
 
-$dumper = new ResultGroupSerializer();
+$stats = array();
 
-foreach ($groups as $group) {
-    $path = "{$root}/{$group->getBaseName()}.json";
+$count = function ($index, $count = true) use (&$stats) {
+    if ($count) {
+        $stats[$index] = (@$stats[$index] ?: 0) + 1;
+    }
+};
 
-    echo "writing: {$path}\n";
+$SUCCESS = 'success';
+$FAILURE = 'failure';
+$EXACT = 'exact';
 
-    file_put_contents($path, $dumper->toJSON($group));
+foreach ($results as $result) {
+    $count($result->target->package_name . ":ALL:" . $SUCCESS, $result->success);
+    $count($result->target->package_name . ":ALL:" . $FAILURE, !$result->success);
+    $count($result->target->package_name . ":ALL:" . $EXACT, $result->exact);
+
+    if ($result->target->flavor === $result->test->flavor) {
+        $count($result->target->package_name . ":{$result->test->flavor}:" . $SUCCESS, $result->success);
+        $count($result->target->package_name . ":{$result->test->flavor}:" . $FAILURE, !$result->success);
+        $count($result->target->package_name . ":{$result->test->flavor}:" . $EXACT, $result->exact);
+    }
+}
+
+foreach ($suite->tests as $test) {
+    $count('#' . $test->flavor);
+}
+
+ksort($stats);
+
+foreach ($stats as $title => $value) {
+    echo sprintf('[%-40s][%10s]', $title, $value) . "\n";
 }

@@ -3,9 +3,6 @@
 use Composer\Autoload\ClassLoader;
 use mindplay\market\adapters\CebeAdapter;
 use mindplay\market\Flavor;
-use mindplay\market\Result;
-use mindplay\market\ResultGroup;
-use mindplay\market\ResultGroupSerializer;
 use mindplay\market\Suite;
 use mindplay\market\SuiteFactory;
 use mindplay\market\Target;
@@ -45,16 +42,16 @@ test(
             ''
         );
 
-        $suite = new Suite(SuiteFactory::createTargets(), array($test));
+        $targets = SuiteFactory::createTargets();
 
-        $groups = $suite->run();
+        $suite = new Suite($targets, array($test));
 
-        foreach ($groups as $group) {
-            eq(count($group->results), 1, 'one result returned');
+        $results = $suite->run();
 
-            foreach ($group->results as $result) {
-                ok($result->success, "target {$group->target->package_name} {$group->target->version} works");
-            }
+        eq(count($results), count($targets), count($targets) . 'results returned');
+
+        foreach ($results as $result) {
+            ok($result->success, "target {$result->target->package_name} {$result->target->version} works");
         }
     }
 );
@@ -151,52 +148,6 @@ test(
                 $suite = new Suite(array($target_a), array($test_a, $test_b));
             }
         );
-    }
-);
-
-test(
-    'can generate filenames and dump results',
-    function () {
-        $group = new ResultGroup();
-
-        $group->target = $target = new Target();
-        $group->results[] = $result = new Result();
-
-        $result->success = true;
-        $result->exact = true;
-        $result->output = 'output';
-        $result->test = $test = new Test('reference', 'input', 'expected', 'flavor');
-
-        $target->package_name = 'foo/bar';
-        $target->version = '1.0.1';
-        $target->flavor = Flavor::VANILLA;
-
-        eq($group->getBaseName(), 'foo_bar_1_0_1_VANILLA');
-
-        $dumper = new ResultGroupSerializer();
-
-        $json = $dumper->toJSON($group);
-
-        $expected = array(
-            'target'  => array(
-                'package_name' => 'foo/bar',
-                'version'      => '1.0.1',
-                'flavor'       => 'VANILLA',
-            ),
-            'results' => array(
-                array(
-                    'reference' => 'reference',
-                    'flavor'    => 'flavor',
-                    'input'     => 'input',
-                    'expected'  => 'expected',
-                    'output'    => 'output',
-                    'success'   => true,
-                    'exact'     => true,
-                ),
-            ),
-        );
-
-        eq(json_decode($json, true), $expected);
     }
 );
 

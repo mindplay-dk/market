@@ -31,28 +31,23 @@ class Suite
     }
 
     /**
-     * @return ResultGroup[] lists of result groups for each Target tested
+     * @return Result[] list of results for all Targets and Tests
      */
     public function run()
     {
         /**
-         * @var ResultGroup[] $groups
+         * @var Result[] $results
          */
 
-        $groups = array();
+        $results = array();
 
         foreach ($this->targets as $target) {
-            $group = new ResultGroup();
-            $group->target = $target;
-
             foreach ($this->tests as $test) {
-                $group->results[] = self::test($test, $target);
+                $results[] = self::test($test, $target);
             }
-
-            $groups[] = $group;
         }
 
-        return $groups;
+        return $results;
     }
 
     /**
@@ -94,10 +89,11 @@ class Suite
 
         $exact = $output === $test->expected;
 
+        $result->target = $target;
         $result->test = $test;
         $result->output = $output ?: "ERROR: {$error}";
         $result->exact = $exact;
-        $result->success = $exact ?: self::compareHTML($output, $test->expected);
+        $result->success = $exact || self::compareHTML($output, $test->expected);
 
         return $result;
     }

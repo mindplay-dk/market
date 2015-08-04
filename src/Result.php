@@ -5,6 +5,11 @@ namespace mindplay\market;
 class Result
 {
     /**
+     * @var Target
+     */
+    public $target;
+
+    /**
      * @var Test
      */
     public $test;

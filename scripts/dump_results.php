@@ -19,33 +19,35 @@ $results = $suite->run();
 $stats = array();
 
 $count = function ($index, $count = true) use (&$stats) {
-    if ($count) {
-        $stats[$index] = (@$stats[$index] ?: 0) + 1;
-    }
+    $stats[$index] = (@$stats[$index] ?: 0) + ($count ? 1 : 0);
 };
 
-$SUCCESS = 'success';
-$FAILURE = 'failure';
-$EXACT = 'exact';
+$SUCCESS = 'successes';
+$FAILURE = 'failures';
+$EXACT = 'exact matches';
+
+foreach ($suite->tests as $test) {
+    $count('ALL tests');
+    $count("{$test->flavor} tests");
+}
+
+//foreach ($results as $result) {
+//    $count("ALL {$result->target->package_name}:{$result->target->flavor} {$EXACT}", $result->exact);
+//    $count("ALL {$result->target->package_name}:{$result->target->flavor} {$SUCCESS}", $result->success);
+//    $count("ALL {$result->target->package_name}:{$result->target->flavor} {$FAILURE}", !$result->success);
+//}
 
 foreach ($results as $result) {
-    $count($result->target->package_name . ":ALL:" . $SUCCESS, $result->success);
-    $count($result->target->package_name . ":ALL:" . $FAILURE, !$result->success);
-    $count($result->target->package_name . ":ALL:" . $EXACT, $result->exact);
-
     if ($result->target->flavor === $result->test->flavor) {
-        $count($result->target->package_name . ":{$result->test->flavor}:" . $SUCCESS, $result->success);
-        $count($result->target->package_name . ":{$result->test->flavor}:" . $FAILURE, !$result->success);
-        $count($result->target->package_name . ":{$result->test->flavor}:" . $EXACT, $result->exact);
+        $count("{$result->target->package_name}:{$result->target->flavor} total");
+        $count("{$result->target->package_name}:{$result->target->flavor} {$EXACT}", $result->exact);
+        $count("{$result->target->package_name}:{$result->target->flavor} {$SUCCESS}", $result->success);
+        $count("{$result->target->package_name}:{$result->target->flavor} {$FAILURE}", !$result->success);
     }
 }
 
-foreach ($suite->tests as $test) {
-    $count('#' . $test->flavor);
-}
-
-ksort($stats);
+#ksort($stats);
 
 foreach ($stats as $title => $value) {
-    echo sprintf('[%-40s][%10s]', $title, $value) . "\n";
+    echo sprintf('[%-50s][%10s]', $title, $value) . "\n";
 }
